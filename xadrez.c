@@ -17,21 +17,17 @@ void movimentoTorre(char direcao, int quantidade);
 void movimentoRainha(char direcao, int quantidade);
 void movimentoCavalo(char cirecao);
 
+void imprimirMovimento(
+    bool cima,
+    bool baixo,
+    bool esquerda,
+    bool direita,
+    int quantidade
+);
+
+
 int main()
 {
-
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
-
-    // Implementação de Movimentação do Bispo
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
-
-    // Implementação de Movimentação da Torre
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Torre para a direita.
-
-    // Implementação de Movimentação da Rainha
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Rainha para a esquerda.
-
     char pecaSelecionada;
     printf("**** Selecione a peça *****\n\n");
     printf("Selecione a direção de movimento da peça:");
@@ -43,17 +39,6 @@ int main()
     scanf(" %s", &pecaSelecionada);
 
     moverPeca(toupper(pecaSelecionada));
-
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
-
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
-
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
 
     return 0;
 }
@@ -125,22 +110,13 @@ void menuBispo()
 
 void movimentoBispo(char direcao, int quantidade)
 {
-    bool isLeft = direcao == 'A' || direcao == 'D';
-    bool isRight = direcao == 'B' || direcao == 'C';
-    bool isUp = direcao == 'A' || direcao == 'B';
-    bool isDown = direcao == 'C' || direcao == 'D';
-    for (int i = 0; i < quantidade; i++)
-    {
-        if (isUp)
-            printf("\nCima");
-        if (isDown)
-            printf("\nBaixo");
-        if (isLeft)
-            printf("\nEsquerda");
-        if (isRight)
-            printf("\nDireita");
-        printf("\nMovimentos restantes: %d \n", quantidade - (i + 1));
-    }
+    imprimirMovimento(
+        direcao == 'A' || direcao == 'B',
+        direcao == 'C' || direcao == 'D',
+        direcao == 'A' || direcao == 'D',
+        direcao == 'B' || direcao == 'C',
+        quantidade
+    );
 }
 
 void menuTorre()
@@ -156,22 +132,13 @@ void menuTorre()
 
 void movimentoTorre(char direcao, int quantidade)
 {
-    bool isLeft = direcao == 'A';
-    bool isRight = direcao == 'B';
-    bool isUp = direcao == 'C';
-    bool isDown = direcao == 'D';
-    for (int i = 0; i < quantidade; i++)
-    {
-        if (isUp)
-            printf("\nCima");
-        if (isDown)
-            printf("\nBaixo");
-        if (isLeft)
-            printf("\nEsquerda");
-        if (isRight)
-            printf("\nDireita");
-        printf("\nMovimentos restantes: %d \n", quantidade - (i + 1));
-    }
+    imprimirMovimento(
+        direcao == 'C' ,
+        direcao == 'D' ,
+        direcao == 'A' ,
+        direcao == 'B' ,
+        quantidade
+    );
 }
 
 void menuRainha()
@@ -195,18 +162,13 @@ void movimentoRainha(char direcao, int quantidade)
     bool isRight = direcao == 'B' || direcao == 'C' || direcao == 'F';
     bool isUp = direcao == 'A' || direcao == 'B' || direcao == 'G';
     bool isDown = direcao == 'C' || direcao == 'D' || direcao == 'H';
-    for (int i = 0; i < quantidade; i++)
-    {
-        if (isUp)
-            printf("\nCima");
-        if (isDown)
-            printf("\nBaixo");
-        if (isLeft)
-            printf("\nEsquerda");
-        if (isRight)
-            printf("\nDireita");
-        printf("\nMovimentos restantes: %d \n", quantidade - (i + 1));
-    }
+    imprimirMovimento(
+        direcao == 'A' || direcao == 'B' || direcao == 'G',
+        direcao == 'C' || direcao == 'D' || direcao == 'H',
+        direcao == 'A' || direcao == 'D' || direcao == 'F',
+        direcao == 'B' || direcao == 'C' || direcao == 'E',
+        quantidade
+    );
 }
 
 void menuCavalo()
@@ -292,4 +254,36 @@ void movimentoCavalo(char direcao)
             }
         }
     }
+}
+
+void imprimirMovimento(bool cima,
+                       bool baixo,
+                       bool esquerda,
+                       bool direita,
+                       int quantidade)
+{
+    if (quantidade == 0)
+        return;
+
+    if (cima)
+        printf("Cima\n");
+
+    if (baixo)
+        printf("Baixo\n");
+
+    if (esquerda)
+        printf("Esquerda\n");
+
+    if (direita)
+        printf("Direita\n");
+
+    printf("Movimentos restantes: %d\n", quantidade - 1);
+
+    imprimirMovimento(
+        cima,
+        baixo,
+        esquerda,
+        direita,
+        quantidade - 1
+    );
 }
